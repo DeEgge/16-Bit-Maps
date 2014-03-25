@@ -13,7 +13,7 @@ require(rgdal)
 require(rCharts)
 
 # Rohdaten laden
-points = read.csv("tp.csv", header=TRUE, sep=";", encoding="latin1", stringsAsFactors=FALSE)
+points = read.csv("points.csv", header=TRUE, sep=";", encoding="latin1", stringsAsFactors=FALSE)
 
 # geoJSON erzeugen
 pointsSP = SpatialPointsDataFrame(points[,c(3,4)], as.data.frame(points[,2]))  # erst ein SP-Format erzeugen
