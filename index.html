@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
 	<link rel="stylesheet" href="styles.css" />
 	
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 	<script src="terraPoints.js"></script>
 </head>
 <body>
@@ -21,8 +21,7 @@
 		map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
 				
 		L.tileLayer('tiles/{z}/{x}/{y}.png', {
-            tms: true,
-            attributation: 'Map and Data: NINTENDO'
+            tms: true
 		}).addTo(map);
 		
 		var terraPoints = new L.geoJson(points, {
