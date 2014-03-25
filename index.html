@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" /> 
+	<link rel="stylesheet" href="styles.css" />
+	
+	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+	<script src="terraPoints.js"></script>
+</head>
+<body>
+    <div id="map" style="width: 1024px; height: 100%; margin: auto"></div>
+     
+    <script>
+		var map = L.map('map', {
+			maxZoom: 6,
+			minZoom: 2,
+			crs: L.CRS.Simple
+		}).setView([0, 0], 2);
+        var southWest = map.unproject([0,16384], map.getMaxZoom());
+		var northEast = map.unproject([16384,0], map.getMaxZoom());
+		map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
+				
+		L.tileLayer('tiles/{z}/{x}/{y}.png', {
+            tms: true
+		}).addTo(map);
+			
+		//var terraPoints = new L.geoJson(points, {
+		//	onEachFeature: function (feature, layer) {
+		//		layer.bindPopup(
+		//			"<b>Ort: </b>" + feature.properties["points[, 1]"] 
+		//		);
+		//	}
+		//});
+		
+		var terraPoints = new L.geoJson(points, {
+			coordsToLatLng: function (newcoords) {
+				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
+			},
+			pointToLayer: function (feature, coords) {      
+				return L.marker(coords);
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup(
+					feature.properties["NAME"]);
+			}
+		});
+		
+		map.addLayer(terraPoints);
+    </script>
+</body>
+</html>
