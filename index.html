@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" /> 
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 	<link rel="stylesheet" href="styles.css" />
 	
-	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 	<script src="terraPoints.js"></script>
 </head>
 <body>
@@ -21,22 +21,16 @@
 		map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
 				
 		L.tileLayer('tiles/{z}/{x}/{y}.png', {
-            tms: true
+            tms: true,
+            attributation: 'Map and Data: NINTENDO'
 		}).addTo(map);
-			
-		//var terraPoints = new L.geoJson(points, {
-		//	onEachFeature: function (feature, layer) {
-		//		layer.bindPopup(
-		//			"<b>Ort: </b>" + feature.properties["points[, 1]"] 
-		//		);
-		//	}
-		//});
 		
 		var terraPoints = new L.geoJson(points, {
+			//convert pixel coordinates to global coordinates
 			coordsToLatLng: function (newcoords) {
 				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
 			},
-			pointToLayer: function (feature, coords) {      
+			pointToLayer: function (feature, coords) {
 				return L.marker(coords);
 			},
 			onEachFeature: function(feature, layer) {
