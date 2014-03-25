@@ -21,7 +21,8 @@
 		map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
 				
 		L.tileLayer('tiles/{z}/{x}/{y}.png', {
-            tms: true
+            tms: true,
+            attribution: 'Imagery and data: <a href="http://www.nintendo.com">NINTENDO</a>'
 		}).addTo(map);
 		
 		var terraPoints = new L.geoJson(points, {
