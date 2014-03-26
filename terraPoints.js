@@ -1,4 +1,4 @@
-var points = [{
+var overworldPoints = [{
 "type": "FeatureCollection",
 //"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
@@ -100,7 +100,19 @@ var points = [{
 { "type": "Feature", "id": 48, "properties": { "NAME": "Dürretal" }, "geometry": { "type": "Point", "coordinates": [ 8841.0, 14531.0 ] } }
 ,
 { "type": "Feature", "id": 49, "properties": { "NAME": "Höhle" }, "geometry": { "type": "Point", "coordinates": [ 12694.0, 5139.0 ] } }
+,
+{ "type": "Feature", "id": 50, "properties": { "NAME": "Turm der Nixen" }, "geometry": { "type": "Point", "coordinates": [ 15949.0, 9612.0 ] } }
 
 ]
 }
+];
+
+var underworldPoints = [{
+"type": "FeatureCollection",
+
+"features": [
+{ "type": "Feature", "id": 1, "properties": { "NAME": "Krysta" }, "geometry": { "type": "Point", "coordinates": [ 8414.0, 8132.0 ] } }
+
 ]
+}
+];

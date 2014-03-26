@@ -11,21 +11,32 @@
     <div id="map" style="width: 1024px; height: 100%; margin: auto"></div>
      
     <script>
-		var map = L.map('map', {
+    	var overworld = L.tileLayer('overworldTiles/{z}/{x}/{y}.png', {
+            tms: true,
+            attribution: 'Imagery and data: <a href="http://www.nintendo.com">NINTENDO</a>'
+		});
+
+		var underworld = L.tileLayer('underworldTiles/{z}/{x}/{y}.png', {
+            tms: true,
+            attribution: 'Imagery and data: <a href="http://www.nintendo.com">NINTENDO</a>'
+		});
+
+		var baseMaps = {
+			"Oberwelt": overworld,
+			"Unterwelt": underworld
+		};
+
+    	var map = L.map('map', {
 			maxZoom: 6,
 			minZoom: 2,
+			layers: [overworld, underworld],
 			crs: L.CRS.Simple
 		}).setView([0, 0], 2);
         var southWest = map.unproject([0,16384], map.getMaxZoom());
 		var northEast = map.unproject([16384,0], map.getMaxZoom());
 		map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
-				
-		L.tileLayer('tiles/{z}/{x}/{y}.png', {
-            tms: true,
-            attribution: 'Imagery and data: <a href="http://www.nintendo.com">NINTENDO</a>'
-		}).addTo(map);
-		
-		var terraPoints = new L.geoJson(points, {
+
+    	var overworldPoints = new L.geoJson(overworldPoints, {
 			//convert pixel coordinates to global coordinates
 			coordsToLatLng: function (newcoords) {
 				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
@@ -37,9 +48,32 @@
 				layer.bindPopup(
 					feature.properties["NAME"]);
 			}
-		});
-		
-		map.addLayer(terraPoints);
+		}).addTo(map);
+
+    	var underworldPoints = new L.geoJson(underworldPoints, {
+			//convert pixel coordinates to global coordinates
+			coordsToLatLng: function (newcoords) {
+				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
+			},
+			pointToLayer: function (feature, coords) {
+				return L.marker(coords);
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup(
+					feature.properties["NAME"]);
+			}
+		}).addTo(map);
+
+		var overlayMaps = {
+			"Punkte der Oberwelt": overworldPoints,
+			"Punkte der Unterwelt": underworldPoints
+		};
+
+		L.control.layers(baseMaps, overlayMaps, {
+			collapsed: false
+		}).addTo(map);
+
+		//map.addLayer(terraPoints);
     </script>
 </body>
 </html>
