@@ -11,20 +11,20 @@
     <div id="map" style="width: 1024px; height: 100%; margin: auto"></div>
      
     <script>
-    	var overworld = L.tileLayer('overworldTiles/{z}/{x}/{y}.png', {
+		var overworld = L.tileLayer('overworldTiles/{z}/{x}/{y}.png', {
             tms: true,
             attribution: 'Imagery and data: <a href="http://www.nintendo.com">NINTENDO</a>'
 		});
-
+		
 		var underworld = L.tileLayer('underworldTiles/{z}/{x}/{y}.png', {
             tms: true,
             attribution: 'Imagery and data: <a href="http://www.nintendo.com">NINTENDO</a>'
 		});
-
-		var baseMaps = {
-			"Oberwelt": overworld,
-			"Unterwelt": underworld
-		};
+		
+		/*var baseMaps = {
+			"Unterwelt": underworld,
+			"Oberwelt": overworld
+		};*/
 
     	var map = L.map('map', {
 			maxZoom: 6,
@@ -48,7 +48,10 @@
 				layer.bindPopup(
 					feature.properties["NAME"]);
 			}
-		}).addTo(map);
+		});
+		
+		//Fasse die Basemap und das Overlay als Layergruppe zusammen
+		var overworldGroup = L.layerGroup([overworld, overworldPoints]);
 
     	var underworldPoints = new L.geoJson(underworldPoints, {
 			//convert pixel coordinates to global coordinates
@@ -62,14 +65,25 @@
 				layer.bindPopup(
 					feature.properties["NAME"]);
 			}
-		}).addTo(map);
+		});
+		
+		var underworldGroup = L.layerGroup([underworld, underworldPoints]).addTo(map);
 
-		var overlayMaps = {
+		/*var overlayMaps = {
 			"Punkte der Oberwelt": overworldPoints,
 			"Punkte der Unterwelt": underworldPoints
+		};*/
+		
+		var layers = {
+			"Oberwelt": overworldGroup,
+			"Unterwelt": underworldGroup
 		};
 
-		L.control.layers(baseMaps, overlayMaps, {
+		/*L.control.layers(baseMaps, overlayMaps, {
+			collapsed: false
+		}).addTo(map);*/
+		
+		L.control.layers(layers, null, {
 			collapsed: false
 		}).addTo(map);
 
