@@ -47,13 +47,37 @@
 		var northEast = map.unproject([16384,0], map.getMaxZoom());
 		map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
 
+		var icons = {
+			'village': L.icon({
+				iconUrl: 'img/village.png',
+				iconSize: [60,64], // size of the icon width,height
+				iconAnchor: [30,32], // point of the icon which will correspond to marker's location
+				popupAnchor: [30,32] // point from which the popup should open relative to the iconAnchor
+			}),
+			'dungeon': L.icon({
+				iconUrl: 'img/dungeon.png',
+				iconSize: [64,55], 
+				iconAnchor: [32,27], 
+				popupAnchor: [32,27] 
+			})
+		};
+
     	var overworldPoints = new L.geoJson(overworldPoints, {
+    		function (icon) {
+    		var icon;
+
+	    		if (feature.properties.Art === 'village') {
+	    			icon = icons['village'];
+	    		} else  if (feature.properties.Art === 'dungeon'){
+	    			icon = icons['dungeon'];
+	    		}
+    		}
 			//convert pixel coordinates to global coordinates
 			coordsToLatLng: function (newcoords) {
 				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
 			},
 			pointToLayer: function (feature, coords) {
-				return L.marker(coords);
+				return L.marker(coords, {icon: icon});
 			},
 			onEachFeature: function(feature, layer) {
 				layer.bindPopup(
@@ -65,12 +89,21 @@
 		var overworldGroup = L.layerGroup([overworld, overworldPoints]);
 
     	var underworldPoints = new L.geoJson(underworldPoints, {
+    		function (icon) {
+    		var icon;
+
+	    		if (feature.properties.Art === 'village') {
+	    			icon = icons['village'];
+	    		} else  if (feature.properties.Art === 'dungeon'){
+	    			icon = icons['dungeon'];
+	    		}
+    		}
 			//convert pixel coordinates to global coordinates
 			coordsToLatLng: function (newcoords) {
 				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
 			},
 			pointToLayer: function (feature, coords) {
-				return L.marker(coords);
+				return L.marker(coords, {icon: icon});
 			},
 			onEachFeature: function(feature, layer) {
 				layer.bindPopup(
