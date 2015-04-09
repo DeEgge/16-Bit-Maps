@@ -25,7 +25,7 @@ function initMap() {
 		var map = L.map('map', {
 			maxZoom: 6,
 			minZoom: 2,
-			layers: [overworldBasemap, underworldBasemap],
+			layers: [underworldBasemap, overworldBasemap],
 			crs: L.CRS.Simple
 		}).setView([0, 0], 2);
         var southWest = map.unproject([0,16384], map.getMaxZoom());
@@ -49,7 +49,7 @@ function initMap() {
 
 		var overlay = {
 			'Unterwelt': new L.layerGroup(),
-			'Oberwelt': new L.layerGroup()
+			'Oberwelt': new L.layerGroup().addTo(map)
 		};
 
 		L.control.layers(overlay, null, {
