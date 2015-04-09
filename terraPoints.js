@@ -112,6 +112,16 @@ var underworldPoints = [{
 
 "features": [
 { "type": "Feature", "id": 1, "properties": { "NAME": "Krysta" }, "geometry": { "type": "Point", "coordinates": [ 8414.0, 8132.0 ] } }
+,
+{ "type": "Feature", "id": 2, "properties": { "NAME": "Turm 1" }, "geometry": { "type": "Point", "coordinates": [ 3473.0, 12880.0 ] } }
+,
+{ "type": "Feature", "id": 3, "properties": { "NAME": "Turm 2" }, "geometry": { "type": "Point", "coordinates": [ 1449.0, 9568.0 ] } }
+,
+{ "type": "Feature", "id": 4, "properties": { "NAME": "Turm 3" }, "geometry": { "type": "Point", "coordinates": [ 7820.0, 2369.0 ] } }
+,
+{ "type": "Feature", "id": 5, "properties": { "NAME": "Turm 4" }, "geometry": { "type": "Point", "coordinates": [ 11937.0, 3151.0 ] } }
+,
+{ "type": "Feature", "id": 6, "properties": { "NAME": "Turm 5" }, "geometry": { "type": "Point", "coordinates": [ 14237.0, 10810.0 ] } }
 
 ]
 }
