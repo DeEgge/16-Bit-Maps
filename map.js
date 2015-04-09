@@ -1,13 +1,21 @@
-/*function init() {
-	$.ajax({
-		url: "terraPoints.js",
-		type: 'GET',
-		dataType: 'json',
-		cache: false,
-		success: function (json) {
-			_quality = json;
-			initMap();
-		}
+/*var _overworld,_underworld
+
+function init() {
+	$.get('data/overworld.geojson', function(json) {
+		_overworld = json;
+		$.get('data/underworld.geojson', function(json) {
+			_underworld = json;
+			$.ajax({
+				url:'data/all.json',
+				type: 'GET',
+				dataType: 'json',
+				cache: false,
+				success: function (json) {
+					_quality = json;
+					initMap();
+				}
+			});
+		});
 	});
 }*/
 
