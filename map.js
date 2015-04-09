@@ -47,16 +47,16 @@ function initMap() {
 			})
 		};
 
-		/*var overlay = {
+		var overlay = {
 			'Unterwelt': new L.layerGroup(),
 			'Oberwelt': new L.layerGroup()
-		};*/
+		};
 
-		/*L.control.layers({}, overlay, {collapsed: false}).addTo(map);*/
+		L.control.layers(overlay, null, {
+			collapsed: false
+		}).addTo(map);
 
 		//Unterwelt
-		var underworldPoints;
-		var underworldGroup = new L.layerGroup();
 		$.getJSON("data/underworld.geojson",function(data){
    			// add GeoJSON layer to the map once the file is loaded
     		var underworldPoints = L.geoJson(data,{
@@ -70,12 +70,11 @@ function initMap() {
 					layer.bindPopup(feature.properties.NAME);
 				}
 			});
-			var underworldGroup = L.layerGroup([underworldBasemap, underworldPoints]).addTo(map);
+			overlay['Unterwelt'].addLayer(underworldPoints);
+			overlay['Unterwelt'].addLayer(underworldBasemap);
 		});
 
 		//Oberwelt
-		var overworldPoints;
-		var overworldGroup = new L.layerGroup();
 		$.getJSON("data/overworld.geojson",function(data){
    			// add GeoJSON layer to the map once the file is loaded
     		var overworldPoints = L.geoJson(data,{
@@ -89,57 +88,7 @@ function initMap() {
 					layer.bindPopup(feature.properties.NAME);
 				}
 			});
-			var overworldGroup = L.layerGroup([overworldBasemap, overworldPoints]);
+			overlay['Oberwelt'].addLayer(overworldPoints);
+			overlay['Oberwelt'].addLayer(overworldBasemap);
 		});
-
-		var layers = {
-			"Oberwelt": overworldGroup,
-			"Unterwelt": underworldGroup
-		};
-
-		L.control.layers(layers, null, {
-			collapsed: false
-		}).addTo(map);
-
-		/*var overworldPoints = new L.geoJson(overworldPoints, {
-			//convert pixel coordinates to global coordinates
-			coordsToLatLng: function (newcoords) {
-				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
-			},
-			pointToLayer: function (feature, coords) {
-				return L.marker(coords);
-			},
-			onEachFeature: function(feature, layer) {
-				layer.bindPopup(
-					feature.properties["NAME"]);
-			}
-		});
-
-		//Fasse die Basemap und das Overlay als Layergruppe zusammen
-		var overworldGroup = L.layerGroup([overworld, overworldPoints]);
-
-    	var underworldPoints = new L.geoJson(underworldPoints, {
-			//convert pixel coordinates to global coordinates
-			coordsToLatLng: function (newcoords) {
-				return (map.unproject([newcoords[0], newcoords[1]], map.getMaxZoom()));
-			},
-			pointToLayer: function (feature, coords) {
-				return L.marker(coords);
-			},
-			onEachFeature: function(feature, layer) {
-				layer.bindPopup(
-					feature.properties["NAME"]);
-			}
-		});
-
-		var underworldGroup = L.layerGroup([underworld, underworldPoints]).addTo(map);
-
-		var layers = {
-			"Oberwelt": overworld,
-			"Unterwelt": underworld
-		};
-
-		L.control.layers(layers, null, {
-			collapsed: false
-		}).addTo(map);*/
 }
